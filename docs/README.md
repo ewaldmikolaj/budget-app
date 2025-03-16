@@ -1,6 +1,5 @@
 # Budget App
 
-
 ## General information
 
 ### System description
@@ -29,6 +28,10 @@ Application for budget management doesn't require any administrators for user ma
 - task_id
 - task_type
 - status
+
+**Financial Institution** is an actor that interacts with the application to provide automated synchronization of income and expenses. It has the following attributes:
+- id - unique identifier of the financial institution
+- name - name of the financial institution
 
 ## Objects
 
@@ -77,6 +80,10 @@ Application for budget management doesn't require any administrators for user ma
 
 ## Context diagram
 
+![context diagram](./Context_Diagram.jpg)
+
 ## Functional requirements
+
+
 
 ## Non-functional requirements
