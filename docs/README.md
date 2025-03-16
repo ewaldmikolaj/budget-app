@@ -18,16 +18,11 @@ blabla
 3. **Investors** - People that invested their money in development of that application with in order to earn money in case of its success.
 
 ## Actors
-Application for budget management doesn't require any administrators for user management. Individuals create and manege their accounts by themselves. Due to that, only two actors were distinguished.
+The Budget App primarily interacts with two main actors: the User and the Financial Institution. This distinction is made to simplify the system's design and focus on the core interactions necessary for managing personal finances.
 
 **User** is a primary actor who interact with application. User has the following attributes:
 - email
 - password
-
-**System** is hidden, internal actor that performs automated tasks within application. It has following attributes:
-- task_id
-- task_type
-- status
 
 **Financial Institution** is an actor that interacts with the application to provide automated synchronization of income and expenses. It has the following attributes:
 - id - unique identifier of the financial institution
@@ -84,6 +79,60 @@ Application for budget management doesn't require any administrators for user ma
 
 ## Functional requirements
 
+### 1. User authentication
+As a user, I want to create and manage an account, so that my personal information is securely stored and can't be anyone unauthorized. 
 
+**Acceptance criteria:**
+- User can register and login with an email and password.
+- Email and hashed password is stored in database.
+
+### 2. Manual management of Incomes and Expenses
+As a user, I want to manually enter my income and expenses using simple and intuitive UI, so that I am able to track my finances. 
+
+**Acceptance Criteria:**
+- User can create incomes and expenses using a form
+    - expense is described by summary, transaction date, amount and category
+    - income is described by summary, transaction date, amount and source
+- All data is stored inside database
+- Data is associated with user that created it 
+
+### 3. Automated synchronization with Financial Institutions
+As a user, I want to create connection to financial institution in which I have bank accounts, so my expenses and incomes are automatically registered in application. Multiple connections should be able per user. 
+
+**Acceptance Criteria:**
+- User can connect to all financial institutions available in Poland
+- Connection should be established using token that is associated to user and generated during connection creation
+- Connection should pull all expenses and incomes events from its source
+
+
+### 4. Visualization
+As a user, I want to have a possibility to check date-limited charts to analyze my finances. Those charts should show expense and income comparison, and expenses grouped in categories.
+
+**Acceptance Criteria:**
+- Application generate charts based on data stored in database
+- User can select a date range for the charts
+
+### 5. Budget Management
+As a user, I should be able to create a budget for a specific time period to manage my expenses within some limit. 
+
+**Acceptance Criteria:**
+- User can create a budget with an amount, period and status
+    - status can be under or exceeded
+- System monitors if sum of expenses exceeded defined limit and changes status based on calculations
+
+### 6. Expenses Categorization
+As a user who wants to effectively manage my personal finances, I need the ability to categorize my expenses. This feature will allow me to group similar expenses together (e.g., groceries, entertainment, utilities).
+
+**Acceptance Criteria:**
+- Users should be able to edit and delete existing categories.
+- Users should be able to change the category of an existing expense.
+- (Optional) The system may provide a set of pre-defined default categories to help users get started (e.g., Food, Transportation, Bills).
+
+### 7. Notifications
+As a user who is actively managing my budget, I need to receive timely notifications when my expenses are approaching or have exceeded a specified percentage of my budget. This will help me stay informed about my spending in real-time and take immediate action to avoid overspending.
+
+**Acceptance Criteria:**
+- The system should automatically monitor expenses against the budget.
+- When expenses reach or exceed the specified threshold, the system should trigger a notification.
 
 ## Non-functional requirements
