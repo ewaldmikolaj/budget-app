@@ -1,4 +1,27 @@
 # Budget App
+- [Budget App](#budget-app)
+  - [General information](#general-information)
+    - [System description](#system-description)
+    - [Business benefits](#business-benefits)
+  - [Stakeholders](#stakeholders)
+  - [Actors](#actors)
+  - [Objects](#objects)
+  - [Context diagram](#context-diagram)
+  - [Functional requirements](#functional-requirements)
+    - [1. User authentication](#1-user-authentication)
+    - [2. Manual management of Incomes and Expenses](#2-manual-management-of-incomes-and-expenses)
+    - [3. Automated synchronization with Financial Institutions](#3-automated-synchronization-with-financial-institutions)
+    - [4. Visualization](#4-visualization)
+    - [5. Budget Management](#5-budget-management)
+    - [6. Expenses Categorization](#6-expenses-categorization)
+    - [7. Notifications](#7-notifications)
+  - [Non-functional requirements](#non-functional-requirements)
+    - [Security](#security)
+    - [Performance](#performance)
+    - [Usability](#usability)
+  - [Container Diagram](#container-diagram)
+  - [Component Diagram](#component-diagram)
+  - [Technology Stack](#technology-stack)
 
 ## General information
 
@@ -75,7 +98,7 @@ The Budget App primarily interacts with two main actors: the User and the Financ
 
 ## Context diagram
 
-![context diagram](./Context_Diagram.jpg)
+![context diagram](./context.png)
 
 ## Functional requirements
 
@@ -103,7 +126,6 @@ As a user, I want to create connection to financial institution in which I have 
 - User can connect to all financial institutions available in Poland
 - Connection should be established using token that is associated to user and generated during connection creation
 - Connection should pull all expenses and incomes events from its source
-
 
 ### 4. Visualization
 As a user, I want to have a possibility to check date-limited charts to analyze my finances. Those charts should show expense and income comparison, and expenses grouped in categories.
@@ -136,3 +158,45 @@ As a user who is actively managing my budget, I need to receive timely notificat
 - When expenses reach or exceed the specified threshold, the system should trigger a notification.
 
 ## Non-functional requirements
+
+### Security 
+The system must support strong user authentication mechanism to restrict access to user data based on permissions.
+
+As this application holds sensitive data (e.g.: user credentials, which are utilized to connection to external financial institution), it must be encrypted in transit (with HTTPS) and at rest (using AES-256). 
+
+**Acceptance Criteria:**
+- Network traffic can be analyzed to verify that data is transferred using HTTPS.
+- Database inspection to verify encryption at REST.
+- Penetration tests for user authorization verification.
+
+### Performance
+System should response to user request within five seconds. Graphs are exceptions to this rule, they should load in ten seconds.
+
+All operations registered in external financial institutions should be synced with application within five minutes.
+
+**Acceptance Criteria:**
+- Performance monitoring tools to measure response times.
+- Automated tests to measure synchronization times.
+- Database query performance analysis.
+
+### Usability
+Application shall have a clean and intuitive user interface. It must be responsive to ensure that user can operate it from any device. 
+
+Data entry forms must be clear and provide appropriate input validation. 
+
+**Acceptance Criteria:**
+- Usability testing with representative users.
+
+## Container Diagram
+
+![container diagram](./container.png)
+
+## Component Diagram
+
+
+
+## Technology Stack
+| Technology               | Used for | Reason |
+| ------------------------ | -------- | ------ |
+| Python - FastAPI library | Backend  | None   |
+| JavaScript - Svelte      | Frontend | None   |
