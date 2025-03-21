@@ -193,10 +193,13 @@ Data entry forms must be clear and provide appropriate input validation.
 
 ## Component Diagram
 
-
+![component diagram](./component.png)
 
 ## Technology Stack
-| Technology               | Used for | Reason |
-| ------------------------ | -------- | ------ |
-| Python - FastAPI library | Backend  | None   |
-| JavaScript - Svelte      | Frontend | None   |
+| Technology | Used for | Reason                                                                                                            |
+| ---------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
+| Python     | Backend  | High-level programming language with extensive libraries and frameworks for web development.                      |
+| FastAPI    | Backend  | Modern, fast (high-performance), web framework for building APIs based on standard Python type hints.             |
+| JavaScript | Frontend | Versatile language for building interactive user interfaces.                                                      |
+| Svelte     | Frontend | Compiler that generates minimal and highly optimized JavaScript code for building user interfaces.                |
+| Postgres   | Database | Powerful, open-source object-relational database system with a strong reputation for reliability and performance. |
