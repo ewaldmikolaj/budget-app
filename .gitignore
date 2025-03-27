@@ -158,5 +158,4 @@ budget-app-postgres-data/
 
 # Ignore vscode config
 .vscode/
-# VSCode settings
-.vscode/
+
