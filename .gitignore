@@ -150,3 +150,12 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Ignore backend Makefile
+/backend/Makefile
+
+# Ignore PostgreSQL data volume
+budget-app-postgres-data/
+
+# Ignore vscode config
+.vscode/
