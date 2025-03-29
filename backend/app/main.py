@@ -1,16 +1,18 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from sqlmodel import SQLModel, Session, create_engine
+from sqlmodel import SQLModel
 
 from core.models import Budget, Category, Expense, Income, Notification, User
+from core.db import engine
+from api.main import api_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    engine = create_engine("postgresql+psycopg2://admin:admin@localhost/budget_db")
     SQLModel.metadata.create_all(engine)
-    with Session(engine) as session:
-        yield session
+    yield
 
 app = FastAPI(lifespan=lifespan)
+
+app.include_router(api_router)

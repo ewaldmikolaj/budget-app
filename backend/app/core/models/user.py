@@ -1,9 +1,17 @@
 from sqlmodel import Field, SQLModel
 from datetime import datetime
 
-class User(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    email: str
+class UserBase(SQLModel):
+    email: str = Field(index=True)
     password: str
     name: str
     surname: str
+
+class User(UserBase, table=True):
+    id: int = Field(default=None, primary_key=True)
+
+class UserCreate(UserBase):
+    pass
+
+class UserUpdate(UserBase):
+    pass
