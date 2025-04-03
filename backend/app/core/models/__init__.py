@@ -1,5 +1,5 @@
 from .budget import Budget
-from .category import Category
+from .category import Category, CategoryCreate, CategoryUpdate
 from .expense import Expense
 from .income import Income
 from .notification import Notification
