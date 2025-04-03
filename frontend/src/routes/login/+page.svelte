@@ -1,11 +1,11 @@
 <script>
-    import LoginForm from "$lib/components/LoginForm.svelte";
+	import LoginForm from '$lib/components/LoginForm.svelte';
 </script>
 
-<main class="h-screen flex items-center justify-center bg-emerald-500">
-    <LoginForm />
+<main class="flex h-screen items-center justify-center bg-emerald-500">
+	<LoginForm />
 </main>
 
 <style lang="postcss">
-    @reference "tailwindcss";
-  </style>
+	@reference "tailwindcss";
+</style>
