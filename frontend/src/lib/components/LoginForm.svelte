@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 
-	let email = '';
-	let password = '';
-	let error = '';
+	let email: string = '';
+	let password: string = '';
+	let error: string = '';
 
 	async function handleSubmit() {
 		try {
@@ -26,10 +26,8 @@
 			}
 
 			goto('/dashboard');
-		} catch (err) {
-			if (err instanceof Error) {
-				error = err.message;
-			}
+		} catch (err: any) {
+			error = err.message;
 		}
 	}
 </script>
@@ -72,5 +70,6 @@
 			class="mt-4 w-full bg-emerald-500 px-4 py-2 text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
 			>Login</button
 		>
+		<a class="text-emerald-600 underline" href="/register">Don't have account? Sign up here.</a>
 	</form>
 </div>

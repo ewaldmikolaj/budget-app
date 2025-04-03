@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 
-	let name = '';
-	let surname = '';
-	let email = '';
-	let password = '';
+	let name: string = '';
+	let surname: string = '';
+	let email: string = '';
+	let password: string = '';
 
-	let error = '';
+	let error: string = '';
 
 	async function handleRegister() {
 		try {
@@ -49,7 +49,7 @@
 			}
 
 			goto('/dashboard');
-		} catch (err) {
+		} catch (err: any) {
 			if (err instanceof Error) {
 				error = err.message;
 			}
@@ -111,7 +111,9 @@
 		<button
 			type="submit"
 			class="mt-4 w-full bg-emerald-500 px-4 py-2 text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-			>Register</button
 		>
+			Register
+		</button>
+		<a class="text-emerald-600 underline" href="/login">Already have an account? Log in here.</a>
 	</form>
 </div>
