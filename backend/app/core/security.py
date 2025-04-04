@@ -7,7 +7,7 @@ from typing import Any
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = secrets.token_urlsafe(32)
+SECRET_KEY = "123456789"
 ALGORITHM = "HS256"
 
 

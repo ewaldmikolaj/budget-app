@@ -29,7 +29,7 @@ OAuthFormDep = Annotated[OAuth2PasswordRequestForm, Depends()]
 
 async def get_current_user(session: SessionDep, request: Request) -> User:
     """Dependency that retrieves the current user from the token."""
-    exception = HTTPException(status_code=401, detail="Could not validate credentials")
+    exception = HTTPException(status_code=401, detail="Not authenticated")
     try:
         token = request.cookies.get("access_token")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

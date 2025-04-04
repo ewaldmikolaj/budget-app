@@ -1,11 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 
 from core.models import Category, CategoryCreate
 from core import crud
 from ..deps import SessionDep, CurrentUserDep
 
 
-router = APIRouter(prefix="/categories")
+router = APIRouter(prefix="/categories", tags=["categories"])
 
 
 @router.post("", response_model=Category)
@@ -15,7 +15,7 @@ def create_category(
     """Creates a new category"""
     category = crud.create_category(session, category, current_user.id)
     if not category:
-        raise HTTPException(status_code=400, detail="Category already exists")
+        raise HTTPException(status_code=400, detail="Bad request")
 
     return category
 
