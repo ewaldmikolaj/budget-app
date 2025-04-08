@@ -1,5 +1,4 @@
 from sqlmodel import Field, SQLModel
-from pydantic import ConfigDict
 from datetime import datetime
 from decimal import Decimal
 
@@ -26,7 +25,7 @@ class ExpenseUpdate(ExpenseBase):
     pass
 
 
-class ExpenseWithCategory(ExpenseBase):
+class ExpenseGet(ExpenseBase):
     id: int
     category: str
 

@@ -27,7 +27,7 @@
 				<ExpensesForm {onClose} />
 			{/if}
 			{#if type == 'income'}
-				<IncomesForm />
+				<IncomesForm {onClose} />
 			{/if}
 		</form>
 	</div>

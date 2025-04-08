@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from core.models import Expense, ExpenseCreate, ExpenseWithCategory
+from core.models import Expense, ExpenseCreate, ExpenseGet
 from core import crud
 from ..deps import SessionDep, CurrentUserDep
 
@@ -19,10 +19,8 @@ def create_expense(
     return expense
 
 
-@router.get("", response_model=list[ExpenseWithCategory])
-def get_expenses(
-    session: SessionDep, current_user: CurrentUserDep
-) -> list[ExpenseWithCategory]:
+@router.get("", response_model=list[ExpenseGet])
+def get_expenses(session: SessionDep, current_user: CurrentUserDep) -> list[ExpenseGet]:
     """Get all expenses"""
     expenses = crud.get_expenses(session, current_user.id)
 

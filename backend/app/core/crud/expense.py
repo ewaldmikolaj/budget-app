@@ -4,7 +4,7 @@ from core.models import (
     Expense,
     ExpenseCreate,
     ExpenseUpdate,
-    ExpenseWithCategory,
+    ExpenseGet,
     Category,
 )
 
@@ -18,7 +18,7 @@ def create_expense(session: Session, expense: ExpenseCreate, user_id: int) -> Ex
     return object
 
 
-def get_expenses(session: Session, user_id: int) -> list[ExpenseWithCategory]:
+def get_expenses(session: Session, user_id: int) -> list[ExpenseGet]:
     """Get all expenses for a user"""
     statement = (
         select(Expense, Category)
@@ -29,7 +29,7 @@ def get_expenses(session: Session, user_id: int) -> list[ExpenseWithCategory]:
     expenses = []
 
     for expense, category in result:
-        obj = ExpenseWithCategory(
+        obj = ExpenseGet(
             id=expense.id,
             summary=expense.summary,
             amount=expense.amount,
