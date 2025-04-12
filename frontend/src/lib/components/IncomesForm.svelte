@@ -64,7 +64,7 @@
 	</label>
 	<input
 		class="block w-full border border-gray-300 bg-gray-100 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-		type="date"
+		type="datetime-local"
 		id="transactionDate"
 		name="transactionDate"
 		placeholder="Select the transaction date"

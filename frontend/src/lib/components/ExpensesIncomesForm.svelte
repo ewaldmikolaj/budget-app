@@ -8,10 +8,10 @@
 </script>
 
 <div class="fixed inset-0 flex items-center justify-center">
-	<div class="absolute inset-0 bg-emerald-500 bg-opacity-70 backdrop-blur-md"></div>
+	<div class="absolute inset-0 bg-opacity-90 backdrop-blur-lg"></div>
 
 	<div
-		class="lg:w-1/ relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center rounded-lg bg-white p-10 shadow-lg sm:w-3/4"
+		class="lg:w-1/ relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center rounded-lg bg-white p-10 shadow-xl sm:w-3/4"
 	>
 		<form class="flex w-full flex-col space-y-1">
 			<select

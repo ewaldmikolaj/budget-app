@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	// @ts-ignore
 	import feather from 'feather-icons';
+	import CategoriesForm from './CategoriesForm.svelte';
 
 	export let onClose: () => void = () => {};
 
@@ -11,6 +12,7 @@
 	});
 
 	let availableCategories: Array<{ id: string; name: string }> = [];
+	let showCategoryForm = false;
 
 	// Form Data
 	let summary: string = '';
@@ -67,6 +69,10 @@
 		}
 	}
 
+	function toggleCategoryForm() {
+		showCategoryForm = !showCategoryForm;
+	}
+
 	onMount(() => {
 		fetchCategories();
 	});
@@ -101,7 +107,7 @@
 	</label>
 	<input
 		class="block w-full border border-gray-300 bg-gray-100 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-		type="date"
+		type="datetime-local"
 		id="transactionDate"
 		name="transactionDate"
 		placeholder="Select the transaction date"
@@ -124,6 +130,7 @@
 		<button
 			class="flex h-10 w-10 items-center justify-center rounded bg-emerald-500 p-2 text-white hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
 			type="button"
+			on:click={toggleCategoryForm}
 		>
 			{@html plusIcon}
 		</button>
@@ -144,3 +151,6 @@
 		</button>
 	</div>
 </form>
+{#if showCategoryForm}
+	<CategoriesForm onClose={toggleCategoryForm} />
+{/if}
