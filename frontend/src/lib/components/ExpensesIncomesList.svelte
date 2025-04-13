@@ -36,6 +36,7 @@
 				(a, b) => new Date(b.transaction_date).getTime() - new Date(a.transaction_date).getTime()
 			);
 			incomesExpenses = flattenedData;
+			console.log('Fetched data:', incomesExpenses);
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		}

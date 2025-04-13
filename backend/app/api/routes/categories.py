@@ -26,3 +26,23 @@ def get_categories(session: SessionDep, current_user: CurrentUserDep) -> list[Ca
     categories = crud.get_categories(session, current_user.id)
 
     return categories
+
+
+@router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_category(
+    session: SessionDep,
+    category_id: int,
+    current_user: CurrentUserDep,
+) -> None:
+    """Delete a category"""
+    category: Category = crud.get_category_by_id(session, category_id)
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    if category.user_id != current_user.id:
+        raise HTTPException(
+            status_code=403, detail="Not authorized to delete this category"
+        )
+
+    crud.delete_category(session, category)
+    return None

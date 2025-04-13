@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
 from datetime import datetime
 from decimal import Decimal
 
@@ -27,6 +27,6 @@ class ExpenseUpdate(ExpenseBase):
 
 class ExpenseGet(ExpenseBase):
     id: int
-    category: str
+    category: str | None = Field(default="")
 
     category_id: None = Field(default=None, exclude=True)

@@ -23,7 +23,6 @@
 				throw new Error('Failed to fetch categories');
 			}
 			categories = await response.json();
-			console.log(categories);
 		} catch (error) {
 			console.error('Error fetching categories:', error);
 		}
@@ -83,7 +82,11 @@
 			autocomplete="off"
 			on:submit|preventDefault={handleSubmit}
 		>
-			<input type="text" class="flex-1 rounded border p-2" bind:value={name} />
+			<input
+				type="text"
+				class="block w-full flex-1 border border-gray-300 bg-gray-100 p-2 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+				bind:value={name}
+			/>
 			<button
 				type="submit"
 				class="flex-none rounded bg-emerald-500 px-4 py-2 text-white hover:bg-emerald-600"

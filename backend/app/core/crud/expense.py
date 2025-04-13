@@ -34,7 +34,7 @@ def get_expenses(session: Session, user_id: int) -> list[ExpenseGet]:
             summary=expense.summary,
             amount=expense.amount,
             transaction_date=expense.transaction_date,
-            category=category.name,
+            category=category.name if category else None,
         )
         expenses.append(obj)
     return expenses
