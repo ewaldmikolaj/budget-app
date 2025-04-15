@@ -1,10 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException
 
 from core.models import User, UserCreate, UserMe
 from core import crud
 from ..deps import SessionDep, CurrentUserDep
 
-router = APIRouter(prefix="/users")
+router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.post("", response_model=User)

@@ -48,7 +48,7 @@
 				throw new Error(errorData.detail || 'Login failed after registration');
 			}
 
-			goto('/dashboard');
+			goto('/');
 		} catch (err: any) {
 			if (err instanceof Error) {
 				error = err.message;

@@ -25,7 +25,7 @@
 				throw new Error('Invalid credentials');
 			}
 
-			goto('/dashboard');
+			goto('/');
 		} catch (err: any) {
 			error = err.message;
 		}
