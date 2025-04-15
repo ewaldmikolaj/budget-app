@@ -10,6 +10,7 @@
 		width: 20,
 		height: 20
 	});
+	const currentDate = new Date().toISOString().slice(0, 16);
 
 	let availableCategories: Array<{ id: string; name: string }> = [];
 	let showCategoryForm = false;
@@ -112,6 +113,7 @@
 		name="transactionDate"
 		placeholder="Select the transaction date"
 		required
+		max={currentDate}
 		bind:value={transactionDate}
 	/>
 	<label for="category" class="block text-sm font-medium text-gray-700">Category</label>

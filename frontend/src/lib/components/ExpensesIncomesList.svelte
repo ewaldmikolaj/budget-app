@@ -1,59 +1,23 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
-	type Income = {
-		id: number;
-		summary: string;
-		amount: number;
-		transaction_date: string;
-		source: string;
-		type?: 'income';
-	};
-
-	type Expense = {
-		id: number;
-		summary: string;
-		amount: number;
-		transaction_date: string;
-		category: string;
-		type?: 'expense';
-	};
-
-	let incomesExpenses: (Income | Expense)[] = [];
-
-	async function fetchIncomesExpenses() {
-		const urls = ['http://127.0.0.1:8000/api/v1/incomes', 'http://127.0.0.1:8000/api/v1/expenses'];
-		try {
-			const responses = await Promise.all(
-				urls.map((url) => fetch(url, { method: 'GET', credentials: 'include' }))
-			);
-			const data = await Promise.all(responses.map((response) => response.json()));
-
-			const incomes = data[0].map((item: Income) => ({ ...item, type: 'income' }));
-			const expenses = data[1].map((item: Expense) => ({ ...item, type: 'expense' }));
-
-			const flattenedData = [...incomes, ...expenses].sort(
-				(a, b) => new Date(b.transaction_date).getTime() - new Date(a.transaction_date).getTime()
-			);
-			incomesExpenses = flattenedData;
-			console.log('Fetched data:', incomesExpenses);
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	}
+	import { financialData, fetchFinancialData, isLoading } from '$lib/stores/financialData';
 
 	export function refresh() {
-		fetchIncomesExpenses();
+		fetchFinancialData();
 	}
 
 	onMount(() => {
-		fetchIncomesExpenses();
+		fetchFinancialData();
 	});
 </script>
 
 <div class="flex max-h-full flex-col gap-1 overflow-y-auto">
-	{#if incomesExpenses.length > 0}
-		{#each incomesExpenses as item}
+	{#if $isLoading}
+		<div class="flex justify-center py-4">
+			<p>Loading...</p>
+		</div>
+	{:else if $financialData.length > 0}
+		{#each $financialData as item}
 			<div class="flex flex-col rounded-lg border border-dashed border-gray-300 p-2">
 				{#if item.type === 'income'}
 					<div class="flex flex-row items-center justify-between text-green-600">
@@ -95,6 +59,8 @@
 			</div>
 		{/each}
 	{:else}
-		<div><p></p></div>
+		<div class="py-4 text-center text-gray-500">
+			<p>No transactions found.</p>
+		</div>
 	{/if}
 </div>

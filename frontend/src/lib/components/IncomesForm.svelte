@@ -1,4 +1,6 @@
 <script lang="ts">
+	const currentDate = new Date().toISOString().slice(0, 16);
+
 	let summary: string = '';
 	let amount: number = 0;
 	let transactionDate: string = '';
@@ -69,6 +71,7 @@
 		name="transactionDate"
 		placeholder="Select the transaction date"
 		required
+		max={currentDate}
 		bind:value={transactionDate}
 	/>
 	<label for="source" class="block text-sm font-medium text-gray-700">Source</label>
