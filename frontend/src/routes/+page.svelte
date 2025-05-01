@@ -2,13 +2,16 @@
 	import type { PageData } from './$types';
 	import ExpensesIncomesForm from '$lib/components/ExpensesIncomesForm.svelte';
 	import ExpensesIncomesList from '$lib/components/ExpensesIncomesList.svelte';
+	import Charts from '$lib/components/Charts.svelte';
 
 	let showExpensesIncomesForm: boolean = false;
 	let expensesIncomesList: ExpensesIncomesList;
+	let charts: Charts;
 
 	function toggleExpensesIncomesForm() {
 		if (showExpensesIncomesForm && expensesIncomesList) {
 			expensesIncomesList.refresh();
+			// charts.refresh();
 		}
 		showExpensesIncomesForm = !showExpensesIncomesForm;
 	}
@@ -45,6 +48,8 @@
 			</div>
 		</div>
 
-		<div class="h-full overflow-hidden rounded-lg bg-white shadow md:col-span-6"></div>
+		<div class="h-full overflow-hidden rounded-lg bg-white shadow md:col-span-6">
+			<Charts bind:this={charts} />
+		</div>
 	</div>
 </main>
