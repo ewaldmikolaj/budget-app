@@ -38,3 +38,16 @@ def get_expenses(session: Session, user_id: int) -> list[ExpenseGet]:
         )
         expenses.append(obj)
     return expenses
+
+
+def get_expense_by_id(session: Session, expense_id: int) -> Expense | None:
+    """Get an expense by ID"""
+    statement = select(Expense).where(Expense.id == expense_id)
+    result = session.exec(statement).first()
+    return result
+
+
+def delete_expense(session: Session, expense: Expense) -> None:
+    """Delete an expense"""
+    session.delete(expense)
+    session.commit()

@@ -37,4 +37,3 @@ def delete_category(session: Session, category: Category) -> None:
 
     session.delete(category)
     session.commit()
-    return None

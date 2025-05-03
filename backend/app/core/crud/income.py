@@ -18,3 +18,16 @@ def get_incomes(session: Session, user_id: int) -> list[IncomeGet]:
     result = session.exec(statement).all()
     incomes = [IncomeGet(**income.model_dump(exclude={user_id})) for income in result]
     return incomes
+
+
+def get_income_by_id(session: Session, income_id: int) -> Income | None:
+    """Get an income by ID"""
+    statement = select(Income).where(Income.id == income_id)
+    result = session.exec(statement).first()
+    return result
+
+
+def delete_income(session: Session, income: Income) -> None:
+    """Delete an income"""
+    session.delete(income)
+    session.commit()

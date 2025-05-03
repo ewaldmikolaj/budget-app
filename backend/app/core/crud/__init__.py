@@ -6,5 +6,5 @@ from .category import (
     get_category_by_id,
     delete_category,
 )
-from .expense import create_expense, get_expenses
-from .income import create_income, get_incomes
+from .expense import create_expense, get_expenses, get_expense_by_id, delete_expense
+from .income import create_income, get_incomes, get_income_by_id, delete_income

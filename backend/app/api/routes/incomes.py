@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 
 from core.models import Income, IncomeCreate, IncomeGet
 from core import crud
@@ -25,3 +25,23 @@ def get_incomes(session: SessionDep, current_user: CurrentUserDep) -> list[Incom
     incomes = crud.get_incomes(session, current_user.id)
 
     return incomes
+
+
+@router.delete("/{income_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_income(
+    session: SessionDep,
+    income_id: int,
+    current_user: CurrentUserDep,
+) -> None:
+    """Delete an income"""
+    income: Income = crud.get_income_by_id(session, income_id)
+    if not income:
+        raise HTTPException(status_code=404, detail="Income not found")
+
+    if income.user_id != current_user.id:
+        raise HTTPException(
+            status_code=403, detail="Not authorized to delete this income"
+        )
+
+    crud.delete_income(session, income)
+    return None

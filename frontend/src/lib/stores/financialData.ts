@@ -6,7 +6,7 @@ type Income = {
 	amount: number;
 	transaction_date: string;
 	source: string;
-	type?: 'income';
+	type: 'income';
 };
 
 type Expense = {
@@ -15,7 +15,7 @@ type Expense = {
 	amount: number;
 	transaction_date: string;
 	category: string;
-	type?: 'expense';
+	type: 'expense';
 };
 
 export const financialData = writable<(Income | Expense)[]>([]);

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 
 from core.models import Expense, ExpenseCreate, ExpenseGet
 from core import crud
@@ -25,3 +25,23 @@ def get_expenses(session: SessionDep, current_user: CurrentUserDep) -> list[Expe
     expenses = crud.get_expenses(session, current_user.id)
 
     return expenses
+
+
+@router.delete("/{expense_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_expense(
+    session: SessionDep,
+    expense_id: int,
+    current_user: CurrentUserDep,
+) -> None:
+    """Delete an expense"""
+    expense: Expense = crud.get_expense_by_id(session, expense_id)
+    if not expense:
+        raise HTTPException(status_code=404, detail="Expense not found")
+
+    if expense.user_id != current_user.id:
+        raise HTTPException(
+            status_code=403, detail="Not authorized to delete this expense"
+        )
+
+    crud.delete_expense(session, expense)
+    return None
