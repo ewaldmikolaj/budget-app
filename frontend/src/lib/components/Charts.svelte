@@ -109,15 +109,15 @@
 					{
 						label: 'Expenses',
 						data: expenses,
-						backgroundColor: 'rgba(0, 166, 62, 0.5)',
-						borderColor: 'rgba(0, 166, 62, 1)',
+						backgroundColor: 'rgba(231, 0, 11, 0.5)',
+						borderColor: 'rgba(231, 0, 11, 1)',
 						borderWidth: 1
 					},
 					{
 						label: 'Income',
 						data: incomes,
-						backgroundColor: 'rgba(231, 0, 11, 0.5)',
-						borderColor: 'rgba(231, 0, 11, 1)',
+						backgroundColor: 'rgba(0, 166, 62, 0.5)',
+						borderColor: 'rgba(0, 166, 62, 1)',
 						borderWidth: 1
 					}
 				]
