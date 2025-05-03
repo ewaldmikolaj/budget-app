@@ -88,7 +88,7 @@
 					</div>
 				{/if}
 				<button
-					class="trash-button flex items-center justify-center rounded-r-lg bg-red-600 px-5 text-white"
+					class="hidden items-center justify-center rounded-r-lg bg-red-600 px-5 text-white group-hover:flex"
 					on:click={() => handleDelete(item.type, item.id)}
 				>
 					{@html thrashIcon}
@@ -101,14 +101,3 @@
 		</div>
 	{/if}
 </div>
-
-<style>
-	.trash-button {
-		transform: translateX(100%);
-		transition: transform 0.3s ease;
-	}
-
-	.group:hover .trash-button {
-		transform: translateX(0);
-	}
-</style>
