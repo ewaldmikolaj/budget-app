@@ -10,7 +10,9 @@
 		width: 20,
 		height: 20
 	});
-	const currentDate = new Date().toISOString().slice(0, 16);
+	const now = new Date();
+	now.setHours(now.getHours() + 3);
+	const currentDate = now.toISOString().slice(0, 16);
 
 	let availableCategories: Array<{ id: string; name: string }> = [];
 	let showCategoryForm = false;

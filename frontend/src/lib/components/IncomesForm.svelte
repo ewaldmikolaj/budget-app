@@ -1,5 +1,7 @@
 <script lang="ts">
-	const currentDate = new Date().toISOString().slice(0, 16);
+	const now = new Date();
+	now.setHours(now.getHours() + 3);
+	const currentDate = now.toISOString().slice(0, 16);
 
 	let summary: string = '';
 	let amount: number = 0;
