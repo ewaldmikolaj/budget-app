@@ -26,14 +26,17 @@
 ## General information
 
 ### System description
-Budget App is a application that is designed to empower users in managing their expenses and incomes. Main functionalities are: 
-- **Account creation:** 
+Budget App is a application that is designed to empower users in managing their expenses and incomes. Main functionalities are:
+- **Account creation:** register and authenticate using email and password to securely access personalized finance tracking
 - **Manual data entry:** record income or expenses with summary, amount and transaction date
 - **Automated sync:** connected to supported financial institutions to synchronization of income and expenses
 - **Visualization:** Generate date-limited charts that provide analysis of income and expenses
 
 ### Business benefits
-blabla
+- **Enhanced Financial Awareness:** Users gain comprehensive visibility into their spending patterns and income sources
+- **Expense Optimization:** Identification of unnecessary spending allows users to reduce costs and increase savings
+- **Improved Decision Making:** Data-driven insights enable better financial planning and resource allocation
+- **User Retention:** Regular engagement through budget notifications and financial tracking creates sticky user experience
 
 ## Stakeholders
 1. **End Users** - Individuals who will use the application to manage their personal finances, including tracking expenses and incomes.

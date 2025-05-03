@@ -3,8 +3,6 @@
 	import Chart from 'chart.js/auto';
 	import { fetchFinancialData, financialData } from '$lib/stores/financialData';
 
-	// Define types for our data structures
-
 	interface MonthlyData {
 		monthKey: string;
 		month: string;
@@ -15,25 +13,44 @@
 	let chartCanvas: HTMLCanvasElement;
 	let chartInstance: Chart | undefined;
 
+	let startDate: string;
+	let endDate: string;
+	let todayIsoString: string;
+
+	onMount(() => {
+		const today = new Date();
+		todayIsoString = today.toISOString().split('T')[0];
+		endDate = today.toISOString().split('T')[0];
+
+		const sixMonthsAgo = new Date();
+		sixMonthsAgo.setMonth(today.getMonth() - 6);
+		startDate = sixMonthsAgo.toISOString().split('T')[0];
+	});
+
 	let expenses: number[] = [];
 	let incomes: number[] = [];
 	let months: string[] = [];
 
-	// Process financial data into monthly aggregates
 	$: {
-		// Map transactions to monthly data
 		const monthlyData: Record<string, MonthlyData> = {};
 
-		// Process all financial data
-		$financialData.forEach((item: any) => {
-			// Extract month from transaction date
+		const filteredData = $financialData.filter((item: any) => {
+			const transactionDate = new Date(item.transaction_date);
+			const start = startDate ? new Date(startDate) : new Date(0);
+			const end = endDate ? new Date(endDate) : new Date();
+
+			end.setHours(23, 59, 59, 999);
+
+			return transactionDate >= start && transactionDate <= end;
+		});
+
+		filteredData.forEach((item: any) => {
 			const date = new Date(item.transaction_date);
 			const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
 
-			// Initialize month entry if it doesn't exist
 			if (!monthlyData[monthKey]) {
 				monthlyData[monthKey] = {
-					monthKey, // Keep the key for sorting
+					monthKey,
 					month: new Date(date.getFullYear(), date.getMonth(), 1).toLocaleDateString('en-US', {
 						month: 'short',
 						year: 'numeric'
@@ -43,7 +60,6 @@
 				};
 			}
 
-			// Add amount to appropriate category
 			if (item.type === 'expense') {
 				monthlyData[monthKey].expenses += Number(item.amount);
 			} else if (item.type === 'income') {
@@ -51,18 +67,15 @@
 			}
 		});
 
-		// Convert to array and sort by date
 		const sortedData: MonthlyData[] = Object.values(monthlyData).sort((a, b) => {
 			return a.monthKey.localeCompare(b.monthKey);
 		});
 
-		// Extract data for chart
 		months = sortedData.map((item) => item.month);
 		expenses = sortedData.map((item) => item.expenses);
 		incomes = sortedData.map((item) => item.incomes);
 	}
 
-	// Add a refresh method
 	export function refresh(): void {
 		fetchFinancialData();
 	}
@@ -74,8 +87,7 @@
 		updateChart();
 	});
 
-	// Update chart when data changes
-	$: if (months.length > 0 && chartCanvas) {
+	$: if ((months.length > 0 && chartCanvas) || (startDate && endDate)) {
 		updateChart();
 	}
 
@@ -84,7 +96,12 @@
 			chartInstance.destroy();
 		}
 
-		chartInstance = new Chart(chartCanvas, {
+		if (!chartCanvas) return;
+
+		const ctx = chartCanvas.getContext('2d');
+		if (!ctx) return;
+
+		chartInstance = new Chart(ctx, {
 			type: 'bar',
 			data: {
 				labels: months,
@@ -92,51 +109,71 @@
 					{
 						label: 'Expenses',
 						data: expenses,
-						backgroundColor: 'rgba(255, 99, 132, 0.5)',
-						borderColor: 'rgba(255, 99, 132, 1)',
+						backgroundColor: 'rgba(0, 166, 62, 0.5)',
+						borderColor: 'rgba(0, 166, 62, 1)',
 						borderWidth: 1
 					},
 					{
-						label: 'Incomes',
+						label: 'Income',
 						data: incomes,
-						backgroundColor: 'rgba(54, 162, 235, 0.5)',
-						borderColor: 'rgba(54, 162, 235, 1)',
+						backgroundColor: 'rgba(231, 0, 11, 0.5)',
+						borderColor: 'rgba(231, 0, 11, 1)',
 						borderWidth: 1
 					}
 				]
 			},
 			options: {
 				responsive: true,
-				plugins: {
-					legend: {
-						position: 'top'
-					}
-				},
 				scales: {
-					x: {
-						title: {
-							display: true,
-							text: 'Months'
-						}
-					},
 					y: {
+						beginAtZero: true,
 						title: {
 							display: true,
 							text: 'Amount'
-						},
-						beginAtZero: true
+						}
+					},
+					x: {
+						title: {
+							display: true,
+							text: 'Month'
+						}
 					}
 				}
 			}
 		});
 	}
 
-	// Cleanup on component destroy
-	onDestroy((): void => {
+	onDestroy(() => {
 		if (chartInstance) {
 			chartInstance.destroy();
 		}
 	});
 </script>
+
+<div class="flex justify-center pt-5 sm:pt-10">
+	<div class="mb-4 flex flex-col gap-4 sm:flex-row">
+		<div class="flex-row items-center justify-between gap-2">
+			<label for="start-date">Start Date</label>
+			<input
+				type="date"
+				id="start-date"
+				class="border border-gray-300 bg-gray-100 px-3 py-0.5 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+				bind:value={startDate}
+				max={endDate}
+			/>
+		</div>
+		<div class="flex-row items-center justify-between gap-2">
+			<label for="end-date">End Date</label>
+			<input
+				type="date"
+				id="end-date"
+				class="border border-gray-300 bg-gray-100 px-3 py-0.5 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-600"
+				bind:value={endDate}
+				min={startDate}
+				max={todayIsoString}
+			/>
+		</div>
+	</div>
+</div>
 
 <canvas bind:this={chartCanvas}></canvas>
